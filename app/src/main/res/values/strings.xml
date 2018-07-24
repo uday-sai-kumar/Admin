@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">ClgAttendance</string>
+    <string name="hint">Regno</string>
+    <string name="login">Login</string>
+    <dimen name="button_round">15dp</dimen>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <!-- TODO:bottom navigation items -->
+    <string name="item1">Home</string>
+    <string name="item2">Attendance</string>
+    <string name="item3">Marks</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- TODO:fragment_home-->
+    <string name="profile_name">Uday Sai Kumar</string>
+    <string name="progress">Student Progress</string>
+    <string name="SSC">SSC</string>
+    <string name="Inter">Inter</string>
+    <string name="btech">BTECH</string>
+    <string name="firstY">First Year</string>
+    <string name="secondY">Second Year</string>
+    <string name="thirdY">Third Year</string>
+    <string name="fourthY">Fourth Year</string>
+    <!-- TODO:fragment_marks-->
+    <string name="subject">Subjects</string>
+    <string name="internals">Internals</string>
+    <string name="externals">Externals</string>
+    <string name="totalmarks">Total</string>
+    <!-- subjects-->
+    <string name="eng1">ENG-1</string>
+    <string name="ma1">MA-1</string>
+
+    <string-array name="branch">
+        <item>CSE</item>
+        <item>IT</item>
+        <item>MECH</item>
+        <item>CIVIL</item>
+        <item>ECE</item>
+        <item>EEE</item>
+    </string-array>
+    <string-array name="year">
+        <item>2014</item>
+        <item>2015</item>
+        <item>2016</item>
+        <item>2017</item>
+    </string-array>
+</resources>
