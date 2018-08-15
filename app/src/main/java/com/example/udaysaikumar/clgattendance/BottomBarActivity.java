@@ -1,32 +1,44 @@
 package com.example.udaysaikumar.clgattendance;
 
+import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.example.udaysaikumar.clgattendance.Fragments.Fragment_Attendance;
 import com.example.udaysaikumar.clgattendance.Fragments.Fragment_Home;
 import com.example.udaysaikumar.clgattendance.Fragments.Fragment_Marks;
 import com.example.udaysaikumar.clgattendance.Login.MainActivity;
 
+import java.util.Objects;
+
 public class BottomBarActivity extends AppCompatActivity {
     Fragment_Home fragment_home;
    Fragment_Attendance fragment_attendance;
    Fragment_Marks fragment_marks;
 BottomNavigationView bottomNavigationView;
+RelativeLayout relativeLayout;
+CoordinatorLayout coordinatorLayout;
 FrameLayout frameLayout;
+int i;
     ViewPager viewPager;
-Fragment frag;
+Fragment frag=null;
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater menuInflater=getMenuInflater();
@@ -42,6 +54,11 @@ Fragment frag;
                sharedPreferences.edit().remove("logged").apply();
                sharedPreferences.edit().remove("username").apply();
                sharedPreferences.edit().remove("password").apply();
+               sharedPreferences.edit().remove("phone").apply();
+               sharedPreferences.edit().remove("otp").apply();
+               sharedPreferences.edit().remove("marks").apply();
+               sharedPreferences.edit().remove("profile").apply();
+               sharedPreferences.edit().remove("attendance").apply();
                Intent i=new Intent(getApplicationContext(),MainActivity.class);
                startActivity(i);
                finish();
@@ -54,42 +71,77 @@ Fragment frag;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom_bar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        coordinatorLayout=findViewById(R.id.mycoordinate);
         bottomNavigationView=findViewById(R.id.bottomNavigationView);
-        frameLayout=findViewById(R.id.frame);
-//viewPager=findViewById(R.id.viewPager);
+        relativeLayout=findViewById(R.id.myrelative);
+       // frameLayout=findViewById(R.id.frame);
+viewPager=findViewById(R.id.viewPager);
+viewPager.setOffscreenPageLimit(2);
+
+viewPager.setPageTransformer(false,new PagerTransformer());
       fragment_attendance=new Fragment_Attendance();
       fragment_marks=new Fragment_Marks();
       fragment_home=new Fragment_Home();
-      //  bottomNavigationView.getMenu().findItem(R.id.menu_home).setChecked(true);
         bottomNavigationView.setSelectedItemId(R.id.menu_home);
-     callFrag(new Fragment_Home());
 bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        CharSequence s1;
         switch (menuItem.getItemId())
         {
             case R.id.menu_home:
-                frag=fragment_home;
-                break;
+                viewPager.setCurrentItem(0);
+                return  true;
+
             case R.id.menu_attendance:
-                frag=fragment_attendance;
-                break;
+                viewPager.setCurrentItem(1);
+                return  true;
+
             case R.id.menu_marks:
-                frag=fragment_marks;
-                break;
+                viewPager.setCurrentItem(2);
+                return true;
+
 
 
         }
-        return callFrag(frag);
+        return  false;
     }
 });
+checkNet();
     }
-    private boolean  callFrag(Fragment fragment){
-        if(fragment!=null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frame, fragment).commit();
-            return true;
+    public void checkNet(){
+        ConnectivityManager connectivityManager= (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert connectivityManager != null;
+        NetworkInfo networkInfo=connectivityManager.getActiveNetworkInfo();
+        assert networkInfo != null;
+        if(networkInfo!=null && networkInfo.isConnected() )
+        {
+            bottomNavigationView.setSelectedItemId(R.id.menu_home);
+            setUpPager(viewPager);
         }
-        return false;
+        else{
+            Snackbar snackbar=Snackbar.make(relativeLayout,"No internt connection",Snackbar.LENGTH_INDEFINITE).setAction("retry", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    checkNet();
+                }
+            });
+            snackbar.show();
+            
+
+        }
     }
+    private  void setUpPager(ViewPager pager){
+
+        BottomPagerAdapter pagerAdapter = new BottomPagerAdapter(getSupportFragmentManager());
+        pagerAdapter.addFrag(new Fragment_Home());
+        pagerAdapter.addFrag(new Fragment_Attendance());
+        pagerAdapter.addFrag(new Fragment_Marks());
+        pager.setAdapter(pagerAdapter);
+
+    }
+
 }

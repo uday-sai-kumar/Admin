@@ -3,7 +3,9 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <!--TODO:android_home-->
-    <dimen name="profile">25sp</dimen>
+    <dimen name="profile">24sp</dimen>
+    <dimen name="profile1">23sp</dimen>
+
     <dimen name="head">22sp</dimen>
     <dimen name="course">17sp</dimen>
     <dimen name="marks">22sp</dimen>

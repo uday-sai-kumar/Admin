@@ -2,18 +2,33 @@ package com.example.udaysaikumar.clgattendance.MarksFrgments;
 
 
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.udaysaikumar.clgattendance.MarksPack.MarksData;
 import com.example.udaysaikumar.clgattendance.R;
 import com.example.udaysaikumar.clgattendance.RetrofitPack.RetroGet;
-import com.example.udaysaikumar.clgattendance.RetrofitPack.RetroServer;
+import com.example.udaysaikumar.clgattendance.RetrofitPack.RetrofitMarksServer;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,69 +40,130 @@ import static android.content.Context.MODE_PRIVATE;
  * A simple {@link Fragment} subclass.
  */
 public class FragmentSem_11 extends Fragment {
-    String BRANCH="CSE_2015_2019";
+
     RetroGet retroGet;
-    String USER="Uni.Reg.No";
-    String PA="Password";
-    String API_KEY="AKPhEaFsE8c1f98hiX1VXa0dj5_7KFq0";
-TextView eng,engi,engex,engtotal;
-TextView ma,mai,maex,matotal;
+    String API_KEY = "AKPhEaFsE8c1f98hiX1VXa0dj5_7KFq0";
+    TableLayout tableLayout, headTable;
+    TableLayout tableLayout1;
+    JSONObject jj;
+    List<String> st = new ArrayList<>();
+    TextView subject, internals, externals, total;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v=inflater.inflate(R.layout.fragment_fragment_sem_11, container, false);
-        eng=v.findViewById(R.id.eng);
-        engi=v.findViewById(R.id.engi);
-        engex=v.findViewById(R.id.engex);
-        engtotal=v.findViewById(R.id.engtotal);
-        ma=v.findViewById(R.id.ma1);
-        mai=v.findViewById(R.id.ma1i);
-        maex=v.findViewById(R.id.ma1ex);
-        matotal=v.findViewById(R.id.ma1total);
-        SharedPreferences sharedPreferences=v.getContext().getSharedPreferences("MyLogin",MODE_PRIVATE);
-        String UNAME=sharedPreferences.getString("username","");
-        String PASS=sharedPreferences.getString("password","");
-        retroGet= RetroServer.getRetrofit().create(RetroGet.class);
-        String q="{\"username\":{$eq:\""+UNAME+"\"},\"password\":{$eq:\""+PASS+"\"}}";
-     //   String q2="{\"field8\":{$eq:\""+USER+"\"},\"field9\":{$eq:\""+PA+"\"}}";
-       // String f="{\"field42\": 1,\"field43\": 1,\"field44\": 1,\"field45\": 1,\"field46\": 1,\"field47\": 1,\"field48\": 1,\"field49\": 1,\"field50\": 1}";
-      //  String f="{\"field42\": 1,\"field52\": 1,\"field62\": 1,\"field43\": 1,\"field53\": 1,\"field63\": 1,\"field44\": 1,\"field54\": 1,\"field64\": 1}";
-        Call<List<MarksData>> datas = retroGet.getMarksData("TRIAL",API_KEY,q);
-        datas.enqueue(new Callback<List<MarksData>>() {
-            @Override
-            public void onResponse(Call<List<MarksData>> call, Response<List<MarksData>> response) {
-                System.out.println("Hello"+response.body().get(0).getRegno());
-//eng.setText(response.body().get(0).getField42());
-//ma.setText(response.body().get(0).getField43());
+        final View v = inflater.inflate(R.layout.fragment_fragment_sem_11, container, false);
+        tableLayout = v.findViewById(R.id.tables11);
+        tableLayout1 = v.findViewById(R.id.tablesfinal);
+        subject = v.findViewById(R.id.subject);
+        internals = v.findViewById(R.id.internals);
+        externals = v.findViewById(R.id.externals);
+        total = v.findViewById(R.id.total);
+        SharedPreferences sharedPreferences = v.getContext().getSharedPreferences("MyLogin", MODE_PRIVATE);
+        final String UNAME = sharedPreferences.getString("username", "");
+        String PASS = sharedPreferences.getString("password", "");
+        String MARKS = sharedPreferences.getString("marks", "");
+        if (Integer.parseInt(UNAME.subSequence(0, 2).toString()) >= 15) {
+
+            subject.setText(R.string.subject);
+            internals.setText(R.string.internals);
+            externals.setText(R.string.externals);
+            total.setText(R.string.totalmarks);
+        } else {
+
+            subject.setText(R.string.subject);
+            internals.setText(R.string.internals1);
+            externals.setText(R.string.externals1);
+
+            total.setText(R.string.totalmarks1);
+
+            //tableLayout.addView(tr, new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        }
+        String str = getArguments() != null ? getArguments().getString("data") : null;
+        try {
+            JSONObject jj=new JSONObject(str);
+            Iterator<String> headers = jj.keys();
+
+            while (headers.hasNext()) {
+                String head = headers.next();
+                st.add(head);
             }
 
-            @Override
-            public void onFailure(Call<List<MarksData>> call, Throwable t) {
+            JSONObject jj1 = jj.getJSONObject(st.get(0));
+            JSONObject jj2 = jj.getJSONObject(st.get(1));
+            JSONObject jj3 = jj.getJSONObject(st.get(2));
+            JSONObject jj4 = jj.getJSONObject(st.get(3));
+            Iterator<String> it = jj1.keys();
+            Iterator<String> it1 = jj2.keys();
+            Iterator<String> it2 = jj3.keys();
+            Iterator<String> it4 = jj4.keys();
+            while (it.hasNext()) {
+                String key = it.next();
+                String key1 = it1.next();
+                String key2 = it2.next();
+                Typeface typeface = ResourcesCompat.getFont(v.getContext(), R.font.open_sans);
+                TableRow tr = new TableRow(v.getContext());
+
+                tr.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                TextView t = new TextView(v.getContext());
+                t.setText(key);
+                t.setTypeface(typeface);
+                t.setGravity(Gravity.CENTER);
+                t.setBackgroundResource(R.drawable.table_custom_text);
+                t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                tr.addView(t);
+                TextView t1 = new TextView(v.getContext());
+                t1.setBackgroundResource(R.drawable.table_custom_text);
+                t1.setText(jj1.get(key).toString());
+                t1.setTypeface(typeface);
+                t1.setGravity(Gravity.CENTER);
+                t1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                tr.addView(t1);
+                TextView t2 = new TextView(v.getContext());
+                t2.setText(jj2.get(key1).toString());
+                t2.setGravity(Gravity.CENTER);
+                t2.setBackgroundResource(R.drawable.table_custom_text);
+                t2.setTypeface(typeface);
+                t2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                tr.addView(t2);
+                TextView t3 = new TextView(v.getContext());
+                t3.setText(jj3.get(key2).toString());
+                t3.setTypeface(typeface);
+                t3.setGravity(Gravity.CENTER);
+                t3.setBackgroundResource(R.drawable.table_custom_text);
+                t3.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                tr.addView(t3);
+                tableLayout.addView(tr, new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            }
+            while (it4.hasNext()) {
+                String key = it4.next();
+                Typeface typeface = ResourcesCompat.getFont(v.getContext(), R.font.open_sans);
+                TableRow tr = new TableRow(v.getContext());
+
+                tr.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                TextView t = new TextView(v.getContext());
+                t.setText(key);
+                t.setGravity(Gravity.CENTER);
+                t.setBackgroundResource(R.drawable.table_custom_text_conclusion);
+                t.setTypeface(typeface);
+                t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                tr.addView(t);
+                TextView t1 = new TextView(v.getContext());
+                t1.setBackgroundResource(R.drawable.table_custom_text_conclusion);
+                t1.setText(jj4.get(key).toString());
+                t1.setGravity(Gravity.CENTER);
+                t1.setTypeface(typeface);
+                t1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                tr.addView(t1);
+                tableLayout1.addView(tr, new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
             }
-        });
-       /* Call<List<MarksData>> dataCall = retroGet.getMarksData(BRANCH,API_KEY,q,f);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        dataCall.enqueue(new Callback<List<MarksData>>() {
-            @Override
-            public void onResponse(Call<List<MarksData>> call, Response<List<MarksData>> response) {
-                List<MarksData> data=response.body();
-engi.setText(data.get(0).getField42());
-engex.setText(data.get(0).getField52());
-engtotal.setText(data.get(0).getField62());
-mai.setText(data.get(0).getField43());
-maex.setText(data.get(0).getField53());
-matotal.setText(data.get(0).getField63());
 
-            }
-
-            @Override
-            public void onFailure(Call<List<MarksData>> call, Throwable t) {
-
-            }
-        });*/
         return v;
     }
 

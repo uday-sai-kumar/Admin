@@ -4,7 +4,12 @@
     android:bottomRightRadius="@dimen/buttonround"
     android:topLeftRadius="@dimen/buttonround"
     android:topRightRadius="@dimen/buttonround"/>
-    <solid android:color="@color/colorPrimaryDark"/>
+    <gradient android:type="linear"
+        android:angle="0"
+        android:startColor="@color/colorPrimary"
+        android:endColor="@color/colorPrimaryDark"
+        android:centerColor="@color/colorAccent"
+        />
 <stroke android:color="#FFFFFF"
     android:width="1dp"/>
 </shape>

@@ -3,11 +3,9 @@
     package="com.example.udaysaikumar.clgattendance">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
 
     <application
         android:allowBackup="true"
@@ -28,12 +26,11 @@
         <activity
             android:name=".BottomBarActivity"
             android:screenOrientation="portrait" />
-        \
         <activity
             android:name=".Login.MainActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".RetrofitPack.MongoDbPut" />
-        <activity android:name=".Trial"></activity>
+        <activity android:name=".Login.OTPActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

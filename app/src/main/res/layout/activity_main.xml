@@ -5,32 +5,62 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/linear"
+        android:src="@drawable/logo" />
     <LinearLayout
+        android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-android:id="@+id/linear"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="70dp"
+        android:layout_centerVertical="true"
         android:orientation="vertical">
 
-        <android.support.design.widget.TextInputLayout
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:orientation="horizontal">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_gravity="center_vertical"
+        android:text="@string/_91"/>
+
+    <EditText
+        android:id="@+id/pNo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans_light"
+        android:hint="@string/your_phone_number"
+        android:inputType="phone"
+        android:maxLength="10"
+
+        android:textSize="20sp"
+        android:textStyle="bold" />
+</LinearLayout>
+        <!--  <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="10dp">
 
             <EditText
-                android:id="@+id/username"
+                android:id="@+id/otp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_light"
-                android:hint="UserName"
+                android:hint="Enter Phone Number"
                 android:inputType="textEmailAddress"
                 android:textSize="20sp"
                 android:textStyle="bold" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
+        </android.support.design.widget.TextInputLayout>-->
+        <!-- <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:passwordToggleEnabled="true"
@@ -45,18 +75,18 @@ android:id="@+id/linear"
                 android:inputType="textPassword"
                 android:textSize="20sp"
                 android:textStyle="bold" />
-        </android.support.design.widget.TextInputLayout>
+        </android.support.design.widget.TextInputLayout>-->
 
         <Button
             android:id="@+id/login"
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:layout_marginTop="25dp"
             android:background="@drawable/button_round"
             android:fontFamily="@font/open_sans_light"
-            android:text="Login"
-            android:layout_margin="10dp"
+            android:text="@string/next"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold" />

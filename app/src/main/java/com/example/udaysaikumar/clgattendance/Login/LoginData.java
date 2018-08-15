@@ -1,20 +1,29 @@
 package com.example.udaysaikumar.clgattendance.Login;
 
-
 public class LoginData {
-    public String regno;
-    public String password;
-   public  String collection;
+    public String phone;
+        public String regno;
+   public  String marks;
+   public String profile;
+   public String attendance;
+    public String getPhone() {
+        return phone;
+    }
 
     public String getRegno() {
         return regno;
     }
 
-    public String getPassword() {
-        return password;
+    public String getAttendance() {
+        return attendance;
     }
 
-    public String getCollection() {
-        return collection;
+    public String getMarks() {
+        return marks;
     }
+
+    public String getProfile() {
+        return profile;
+    }
+
 }

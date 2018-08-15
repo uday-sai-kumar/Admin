@@ -1,21 +1,76 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/fragmarks"
+    android:background="#FFFFFF"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.udaysaikumar.clgattendance.Fragments.Fragment_Marks">
 
     <!-- TODO: Update blank fragment layout -->
+    <ProgressBar
+        android:id="@+id/marksprogress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:visibility="visible"/>
+    <RelativeLayout
+        android:id="@+id/relativemarks"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <com.example.udaysaikumar.clgattendance.Fragments.CircleDisplay
+            android:id="@+id/circledisplay"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"/>
+
+     <!--   <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:id="@+id/finalpercentage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_round"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:textSize="75sp"/>
+    </android.support.v7.widget.CardView>-->
+<ImageView
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:layout_gravity="center"
+    android:id="@+id/emoji"/>
 
 <android.support.v4.view.ViewPager
     android:id="@+id/viewPager"
     android:layout_width="match_parent"
-    android:layout_below="@id/tabs"
-    android:layout_height="wrap_content"/>
+    android:layout_height="wrap_content">
     <android.support.design.widget.TabLayout
         android:id="@+id/tabs"
         app:tabMode="scrollable"
         app:tabGravity="fill"
+        app:tabIndicatorColor="#f48fb1"
+        android:focusableInTouchMode="true"
+        app:tabIndicatorHeight="5sp"
+        android:background="#e57373"
+        app:tabTextColor="#eeeeee"
+        app:tabSelectedTextColor="#FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-</RelativeLayout>
+</android.support.v4.view.ViewPager>
+        <TableLayout
+            android:layout_marginTop="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/finalmarks">
+        </TableLayout>
+    </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>

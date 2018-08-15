@@ -1,98 +1,74 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/fragattend"
+    android:background="#FFFFFF"
     android:layout_height="match_parent">
 
 
     <!-- TODO: Update blank fragment layout -->
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ProgressBar
+        android:id="@+id/progressAttendance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:visibility="visible"
+      />
+
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:visibility="invisible"
+    android:id="@+id/attendacelayout"
     android:orientation="vertical">
+    <com.example.udaysaikumar.clgattendance.Fragments.CircleDisplay
+        android:id="@+id/circledisplay"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"/>
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:id="@+id/emoji"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_light"
-        android:text="Attendance Percentage"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-<android.support.v7.widget.CardView
-    android:layout_width="match_parent"
-    android:foreground="?android:attr/selectableItemBackground"
-    android:clickable="true"
-    android:focusable="true"
-    android:layout_height="match_parent"
-   >
-
-    <TextView
+  <!--  <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/custom_textview"
-        android:fontFamily="@font/open_sans_light"
-        android:text="97"
-        android:textAlignment="center"
-        android:textSize="40sp" />
-
-</android.support.v7.widget.CardView>
-
-    <TextView
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_light"
-        android:text="No of classes conducted"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:layout_height="match_parent"
         >
-
         <TextView
+            android:id="@+id/finalattendance"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/custom_textview"
-            android:fontFamily="@font/open_sans_light"
-            android:text="200"
-            android:textAlignment="center"
-            android:textSize="40sp" />
-
-    </android.support.v7.widget.CardView>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans_light"
-        android:text="Number of classes attended"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-    <android.support.v7.widget.CardView
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_round"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:textSize="75sp"/>
+    </android.support.v7.widget.CardView>-->
+  <!--  <com.squareup.timessquare.CalendarPickerView
+        android:id="@+id/calendeview"
         android:layout_width="match_parent"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/custom_textview"
-            android:fontFamily="@font/open_sans_light"
-            android:text="197"
-            android:textAlignment="center"
-            android:textSize="40sp" />
-
-    </android.support.v7.widget.CardView>
-    <Spinner
-        android:layout_marginTop="17dp"
+    </com.squareup.timessquare.CalendarPickerView>-->
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        android:background="#4fffebee"
+        android:id="@+id/calenderView">
+    </com.prolificinteractive.materialcalendarview.MaterialCalendarView>
+   <TableLayout
+       android:id="@+id/tableAttendance"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:stretchColumns="*"
+       >
+   </TableLayout>
+
+
 </LinearLayout>
-
+</FrameLayout>
 </ScrollView>

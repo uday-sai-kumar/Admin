@@ -2,28 +2,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
+    android:scrollbars="vertical"
+    android:fitsSystemWindows="true"
+    android:isScrollContainer="false"
+    android:id="@+id/frahome"
+    android:background="#FFFFFF"
     android:layout_width="match_parent">
+
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="#FFFFFF"
     tools:context="com.example.udaysaikumar.clgattendance.Fragments.Fragment_Home">
 
     <!-- TODO: Update blank fragment layout -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF">
-
-
+        android:background="@drawable/image_semi_circle">
         <ImageView
             android:layout_margin="10dp"
             android:id="@+id/profile_photo"
             android:layout_width="160dp"
             android:layout_height="160dp"
-           android:layout_gravity="center"
-          />
-
+            android:layout_gravity="center"
+            />
         <ProgressBar
             android:id="@+id/imageProgress"
             style="?android:attr/progressBarStyle"
@@ -32,11 +36,27 @@
 
             android:layout_gravity="center" />
     </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ProgressBar
+            android:id="@+id/homeprogress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:layout_gravity="center_horizontal|center_vertical"/>
+    <LinearLayout
+        android:id="@+id/linearprogress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:orientation="vertical">
 <android.support.v7.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
+    android:background="#e8eaf6"
     android:theme="@style/Widget.MaterialComponents.CardView"
     android:layout_gravity="center">
 
@@ -46,281 +66,70 @@
         android:layout_height="wrap_content"
         android:layout_margin="1dp"
         android:background="@drawable/custom_textview"
-        android:fontFamily="@font/open_sans_light"
+        android:fontFamily="@font/open_sans"
         android:gravity="center"
-        android:padding="3dp"
-        android:text="@string/profile_name"
+        android:padding="2dp"
         android:textAlignment="center"
         android:textSize="@dimen/profile"
         android:textStyle="bold" />
 </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="#f8bbd0"
+        android:theme="@style/Widget.MaterialComponents.CardView"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/appregno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:background="@drawable/custom_textview"
+            android:fontFamily="@font/open_sans_light"
+            android:gravity="center"
+            android:padding="2dp"
+            android:textAlignment="center"
+            android:textSize="@dimen/profile1"
+            android:textStyle="bold" />
+    </android.support.v7.widget.CardView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#eeeeee"
         android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:fontFamily="@font/open_sans_light"
-            android:text="@string/progress"
-            android:textSize="@dimen/head"
-            android:textStyle="bold" />
-
-  <!--      <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:fontFamily="@font/open_sans_light"
-            android:text="@string/SSC"
-            android:textAlignment="textStart"
-            android:textSize="@dimen/course"
-            android:textStyle="bold" />
-        <android.support.v7.widget.CardView
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:cardCornerRadius="7dp"
-            android:layout_marginBottom="3dp">
-
-            <TextView
-                android:id="@+id/SSCMARKS"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_light"
-                android:paddingEnd="14dp"
-                android:paddingStart="14dp"
-                android:text="9.2"
-                android:textAlignment="textStart"
-                android:textSize="@dimen/marks"
-                android:textStyle="bold" />
-        </android.support.v7.widget.CardView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:fontFamily="@font/open_sans_light"
-            android:text="@string/Inter"
-            android:textAlignment="textStart"
-            android:textSize="@dimen/course"
-            android:textStyle="bold" />
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:cardCornerRadius="7dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:layout_marginBottom="3dp">
-
-            <TextView
-                android:id="@+id/INTERMARKS"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_light"
-                android:paddingEnd="14dp"
-                android:paddingStart="14dp"
-                android:text="955"
-                android:textAlignment="textStart"
-                android:textSize="@dimen/marks"
-                android:textStyle="bold" />
-        </android.support.v7.widget.CardView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:fontFamily="@font/open_sans_light"
-            android:text="@string/btech"
-            android:textAlignment="textStart"
-            android:textSize="@dimen/course"
-            android:textStyle="bold" />
-        <android.support.v7.widget.CardView
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:cardCornerRadius="7dp"
-            android:layout_marginBottom="3dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_light"
-                android:paddingEnd="14dp"
-                android:paddingStart="14dp"
-                android:text="75"
-                android:textAlignment="textStart"
-                android:textSize="@dimen/marks"
-                android:textStyle="bold" />
-        </android.support.v7.widget.CardView>-->
-
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
             app:cardCornerRadius="7dp">
         <TableLayout
             android:layout_width="match_parent"
+            android:id="@+id/basic"
+            android:layout_margin="2dp"
             android:layout_height="wrap_content"
             android:stretchColumns="*">
-            <TableRow >
-
-                <TextView
-                    android:fontFamily="@font/open_sans_light"
-                    android:text="@string/SSC"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/course" />
-
-                <TextView
-                    android:id="@+id/SSCMARKS"
-                    android:fontFamily="@font/open_sans_light"
-                    android:textAlignment="textStart"
-                    android:textSize="@dimen/marks"
-                    android:textStyle="bold" />
-            </TableRow>
-            <TableRow >
-
-                <TextView
-                    android:fontFamily="@font/open_sans_light"
-                    android:text="@string/Inter"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/course" />
-
-                <TextView
-                    android:id="@+id/INTERMARKS"
-                    android:fontFamily="@font/open_sans_light"
-                    android:textAlignment="textStart"
-                    android:textSize="@dimen/marks"
-                    android:textStyle="bold" />
-            </TableRow>
-            <TableRow>
-
-                <TextView
-                    android:paddingStart="20dp"
-                    android:text="BTECH"
-                    android:textSize="@dimen/course" />
-            </TableRow>
-            <TableRow >
-                <TextView android:textAlignment="center" />
-
-                <TextView
-                    android:fontFamily="@font/open_sans_light"
-                    android:text="SEM 1"
-                    android:textAlignment="textStart" />
-
-                <TextView
-                    android:fontFamily="@font/open_sans_light"
-                    android:text="SEM 2"
-                    android:textAlignment="textStart" />
-            </TableRow>
-
-            <TableRow >
-
-                <TextView
-                    android:fontFamily="@font/open_sans_light"
-                    android:text="@string/firstY"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/course" />
-
-                <TextView
-                    android:id="@+id/fysem1"
-                    android:fontFamily="@font/open_sans_light"
-                    android:textAlignment="textStart"
-                    android:textSize="@dimen/marks"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/fysem2"
-                    android:fontFamily="@font/open_sans_light"
-                    android:textAlignment="textStart"
-                    android:textSize="@dimen/marks"
-                    android:textStyle="bold" />
-            </TableRow>
-            <TableRow >
-
-                <TextView
-                    android:fontFamily="@font/open_sans_light"
-                    android:text="@string/secondY"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/course" />
-
-                <TextView
-                    android:id="@+id/sysem1"
-
-                    android:fontFamily="@font/open_sans_light"
-                    android:textAlignment="textStart"
-                    android:textSize="@dimen/marks"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/sysem2"
-
-                    android:fontFamily="@font/open_sans_light"
-                    android:textAlignment="textStart"
-                    android:textSize="@dimen/marks"
-                    android:textStyle="bold" />
-            </TableRow>
-            <TableRow >
-
-                <TextView
-                    android:fontFamily="@font/open_sans_light"
-                    android:text="@string/thirdY"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/course" />
-
-                <TextView
-                    android:id="@+id/tysem1"
-
-                    android:fontFamily="@font/open_sans_light"
-                    android:textAlignment="textStart"
-                    android:textSize="@dimen/marks"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tysem2"
-
-                    android:fontFamily="@font/open_sans_light"
-                    android:textAlignment="textStart"
-                    android:textSize="@dimen/marks"
-                    android:textStyle="bold"
-                    android:visibility="invisible" />
-            </TableRow>
-            <TableRow >
-
-                <TextView
-                    android:fontFamily="@font/open_sans_light"
-                    android:text="@string/fourthY"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/course"
-                    android:visibility="invisible" />
-
-                <TextView
-                    android:id="@+id/foysem1"
-                    android:fontFamily="@font/open_sans_light"
-                    android:text="9.2"
-                    android:textAlignment="textStart"
-                    android:textSize="@dimen/marks"
-                    android:textStyle="bold"
-                    android:visibility="invisible" />
-
-                <TextView
-                    android:id="@+id/foysem2"
-                    android:fontFamily="@font/open_sans_light"
-                    android:text="9.2"
-                    android:textAlignment="textStart"
-                    android:textSize="@dimen/marks"
-                    android:textStyle="bold"
-                    android:visibility="invisible" />
-            </TableRow>
+        </TableLayout>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            app:cardCornerRadius="7dp">
+        <TableLayout
+            android:layout_margin="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btech"
+            android:stretchColumns="*">
         </TableLayout>
         </android.support.v7.widget.CardView>
     </LinearLayout>
-
+    </LinearLayout>
+    </FrameLayout>
 </LinearLayout>
 </ScrollView>
