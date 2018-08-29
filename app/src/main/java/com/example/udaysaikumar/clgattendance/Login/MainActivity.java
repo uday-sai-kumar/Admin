@@ -75,7 +75,7 @@ else{
                     @Override
                     public void onResponse(@NonNull Call<List<PhoneData>> call, @NonNull Response<List<PhoneData>> response) {
                         assert response.body() != null;
-                        if (response.body()!= null &!response.body().isEmpty()) {
+                        if (response.body()!= null ) {
                                 list = response.body();
                                 System.out.println("ourresponse"+list);
                             if (list != null && !list.isEmpty()) {
@@ -182,6 +182,7 @@ else{
 
                             @Override
                             public void onFailure(@NonNull Call<List<PhoneData>> call, @NonNull Throwable t) {
+                                Toast.makeText(MainActivity.this, "Failure, please connect to active network", Toast.LENGTH_LONG).show();
 
                             }
                         });
@@ -210,7 +211,7 @@ else{
         phone.setEnabled(true);
         //pass.setEnabled(true);
         progressBar.setVisibility(View.INVISIBLE);
-        Toast.makeText(MainActivity.this, "LoginFailure", Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this, "parent number not registered", Toast.LENGTH_LONG).show();
     }
 
 }

@@ -23,12 +23,122 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <com.example.udaysaikumar.clgattendance.Fragments.CircleDisplay
-            android:id="@+id/circledisplay"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center"/>
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*">
+          <!--  <TableRow>
 
+                    <com.github.pavlospt.CircleView
+                        android:id="@+id/bad"
+                        android:layout_gravity="center"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp"
+                        app:cv_titleText="title"
+                        app:cv_subtitleText="subtitle"
+                        app:cv_titleSize="30dp"
+                        app:cv_titleColor="@color/bad"
+                        app:cv_strokeColorValue="@color/colorAccent"
+                        app:cv_backgroundColorValue="#FFFFFF"
+                        app:cv_fillColor="#FFFFFF"
+                        app:cv_fillRadius="0.9"
+                        app:cv_strokeWidthSize="5"/>
+
+                    <com.github.pavlospt.CircleView
+                        android:id="@+id/satisfactory"
+                        android:layout_gravity="center"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        app:cv_titleText="title"
+                        app:cv_subtitleText="subtitle"
+                        app:cv_titleSize="30dp"
+                        app:cv_titleColor="@color/satisfactory"
+                        app:cv_strokeColorValue="@color/colorAccent"
+                        app:cv_backgroundColorValue="#FFFFFF"
+                        app:cv_fillColor="#FFFFFF"
+                        app:cv_fillRadius="0.9"
+                        app:cv_strokeWidthSize="5"/>
+
+                    <com.github.pavlospt.CircleView
+                        android:id="@+id/excellent"
+                        android:layout_gravity="center"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        app:cv_titleText="title"
+                        app:cv_subtitleText="subtitle"
+                        app:cv_titleSize="30dp"
+                        app:cv_titleColor="@color/excellent"
+                        app:cv_strokeColorValue="@color/colorAccent"
+                        app:cv_backgroundColorValue="#FFFFFF"
+                        app:cv_fillColor="#FFFFFF"
+                        app:cv_fillRadius="0.9"
+                        app:cv_strokeWidthSize="5"/>
+
+            </TableRow>-->
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/bad"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:gravity="center"
+                    android:textColor="@color/bad"
+                    android:textSize="30sp"/>
+                <TextView
+                    android:id="@+id/satisfactory"
+                    android:gravity="center"
+                    android:textColor="@color/satisfactory"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:textSize="30sp"/>
+                <TextView
+                    android:id="@+id/excellent"
+                    android:gravity="center"
+                    android:textColor="@color/excellent"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:textSize="30sp"/>
+        </TableRow>
+            <TableRow>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <ImageView
+                        android:id="@+id/emojibad"
+                        android:layout_width="43dp"
+                        android:layout_height="43dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_crying" />
+
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+                    <ImageView
+                        android:id="@+id/emojisatisfactory"
+                        android:layout_width="43dp"
+                        android:layout_height="43dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_sad" />
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <ImageView
+                        android:id="@+id/emojiexcellent"
+                        android:layout_width="43dp"
+                        android:layout_height="43dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_cool" />
+                </android.support.v7.widget.CardView>
+            </TableRow>
+        </TableLayout>
      <!--   <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,11 +152,6 @@
             android:gravity="center"
             android:textSize="75sp"/>
     </android.support.v7.widget.CardView>-->
-<ImageView
-    android:layout_width="50dp"
-    android:layout_height="50dp"
-    android:layout_gravity="center"
-    android:id="@+id/emoji"/>
 
 <android.support.v4.view.ViewPager
     android:id="@+id/viewPager"
@@ -56,11 +161,11 @@
         android:id="@+id/tabs"
         app:tabMode="scrollable"
         app:tabGravity="fill"
-        app:tabIndicatorColor="#f48fb1"
+        app:tabIndicatorColor="#f47937"
         android:focusableInTouchMode="true"
         app:tabIndicatorHeight="5sp"
-        android:background="#e57373"
-        app:tabTextColor="#eeeeee"
+        android:background="#c8d73939"
+        app:tabTextColor="#cfcece"
         app:tabSelectedTextColor="#FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

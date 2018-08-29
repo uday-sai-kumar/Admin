@@ -22,6 +22,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import com.example.udaysaikumar.clgattendance.Fragments.Fragment_Attendance;
+import com.example.udaysaikumar.clgattendance.Fragments.Fragment_Feedback;
 import com.example.udaysaikumar.clgattendance.Fragments.Fragment_Home;
 import com.example.udaysaikumar.clgattendance.Fragments.Fragment_Marks;
 import com.example.udaysaikumar.clgattendance.Login.MainActivity;
@@ -79,7 +80,7 @@ Fragment frag=null;
         relativeLayout=findViewById(R.id.myrelative);
        // frameLayout=findViewById(R.id.frame);
 viewPager=findViewById(R.id.viewPager);
-viewPager.setOffscreenPageLimit(2);
+viewPager.setOffscreenPageLimit(3);
 
 viewPager.setPageTransformer(false,new PagerTransformer());
       fragment_attendance=new Fragment_Attendance();
@@ -103,7 +104,9 @@ bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationVie
             case R.id.menu_marks:
                 viewPager.setCurrentItem(2);
                 return true;
-
+            case R.id.feedback:
+                viewPager.setCurrentItem(3);
+                return  true;
 
 
         }
@@ -117,7 +120,7 @@ checkNet();
         assert connectivityManager != null;
         NetworkInfo networkInfo=connectivityManager.getActiveNetworkInfo();
         assert networkInfo != null;
-        if(networkInfo!=null && networkInfo.isConnected() )
+        if(networkInfo.isConnected())
         {
             bottomNavigationView.setSelectedItemId(R.id.menu_home);
             setUpPager(viewPager);
@@ -140,6 +143,7 @@ checkNet();
         pagerAdapter.addFrag(new Fragment_Home());
         pagerAdapter.addFrag(new Fragment_Attendance());
         pagerAdapter.addFrag(new Fragment_Marks());
+        pagerAdapter.addFrag(new Fragment_Feedback());
         pager.setAdapter(pagerAdapter);
 
     }

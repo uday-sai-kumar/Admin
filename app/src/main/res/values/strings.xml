@@ -33,4 +33,5 @@
     <string name="enter_otp_here">enter OTP here</string>
     <string name="loginn">Login</string>
     <string name="resent_otp">resent OTP</string>
+    <string name="feedback">Feedback</string>
 </resources>

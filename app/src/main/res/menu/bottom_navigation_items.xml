@@ -13,6 +13,9 @@
     android:icon="@drawable/dummy_icon"
     android:id="@+id/menu_marks"
     app:showAsAction="ifRoom"/>
-
+    <item android:title="@string/feedback"
+        android:icon="@drawable/feed_back"
+        android:id="@+id/feedback"
+        app:showAsAction="ifRoom"/>
 
 </menu>

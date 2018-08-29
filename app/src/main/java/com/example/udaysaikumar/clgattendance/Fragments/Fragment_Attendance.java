@@ -1,16 +1,13 @@
 package com.example.udaysaikumar.clgattendance.Fragments;
 
-
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
-import android.text.style.ForegroundColorSpan;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,35 +21,22 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.udaysaikumar.clgattendance.R;
 import com.example.udaysaikumar.clgattendance.RetrofitPack.RetroGet;
 import com.example.udaysaikumar.clgattendance.RetrofitPack.RetrofitMarksServer;
 import com.example.udaysaikumar.clgattendance.RetrofitPack.TimeStampClass;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
-import com.prolificinteractive.materialcalendarview.DayViewDecorator;
-import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
-import com.squareup.timessquare.CalendarPickerView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Objects;
-import java.util.TimeZone;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -74,9 +58,9 @@ LinearLayout linearLayout;
     String timestamp;
     View v;
     String UNAME;
-    TextView finalattendance;
+    TextView bad,satisfacotry,excellent;
     String ATTENDANCE;
-    CircleDisplay cd;
+   // CircleDisplay cd;
     ImageView emoji;
 
     @Override
@@ -87,31 +71,32 @@ LinearLayout linearLayout;
         Calendar nextYear = Calendar.getInstance();
         nextYear.add(Calendar.YEAR, 1);
 
-//        CalendarPickerView calendar = v.findViewById(R.id.calendeview);
-//        Date today = new Date();
-//        calendar.init(today, nextYear.getTime())
-//                .withSelectedDate(today);
+        bad=v.findViewById(R.id.bad);
+        satisfacotry=v.findViewById(R.id.satisfactory);
+        excellent=v.findViewById(R.id.excellent);
         tableAttendance=v.findViewById(R.id.tableAttendance);
         progressAttendance=v.findViewById(R.id.progressAttendance);
         linearLayout=v.findViewById(R.id.attendacelayout);
-        emoji=v.findViewById(R.id.emoji);
         mCV=v.findViewById(R.id.calenderView);
         mCV.canScrollVertically(1);
-        cd=v.findViewById(R.id.circledisplay);
-        cd.setValueWidthPercent(10f);
-        cd.setTextSize(30f);
-        cd.setColor(Color.RED);
-        cd.setDrawText(true);
-        cd.setFormatDigits(2);
-        cd.setUnit("%");
-        cd.setStepSize(0.08f);
+        //cd=v.findViewById(R.id.circledisplay);
+       // cd.setValueWidthPercent(10f);
+        //cd.setTextSize(30f);
+       // cd.setColor(Color.RED);
+       // cd.setDrawText(true);
+       // cd.setFormatDigits(2);
+       // cd.setUnit("%");
+       // cd.setStepSize(0.08f);
         progressAttendance.setIndeterminate(true);
+       // progressAttendance.setVisibility(View.VISIBLE);
         SharedPreferences sharedPreferencess=v.getContext().getSharedPreferences("MyLogin",MODE_PRIVATE);
         UNAME=sharedPreferencess.getString("username","");
         String qq="{\"regno\":{$eq:\""+UNAME+"\"}}";
         retroGet = RetrofitMarksServer.getSecRetrofit().create(RetroGet.class);
+        //linearLayout.setVisibility(View.INVISIBLE);
         Call<String> dataAttendance = retroGet.getPercentage("PERCENTAGE",API_KEY,qq);
         dataAttendance.enqueue(new Callback<String>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                 assert response.body() != null;
@@ -129,28 +114,35 @@ LinearLayout linearLayout;
                         String jsonObject1=jsonObject.get(st).toString();
 
                       Float f=  Float.parseFloat(jsonObject1);
-                        cd.showValue(f, 100, false);
+
+                       // cd.showValue(f, 100, false);
                         if(f>=75){
-                            emoji.setImageResource(R.drawable.smile);
+                            excellent.setText(f.toString());
+
                         }else if(f<75 && f>65){
-                            emoji.setImageResource(R.drawable.average);
+                            satisfacotry.setText(f.toString());
+
                         }
                         else {
-                            emoji.setImageResource(R.drawable.sad);
+                            bad.setText(f.toString());
+
                         }
 
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
                                    }
 
             }
 
             @Override
             public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
-
-            }
+                Toast.makeText(v.getContext(), "please connect to active network", Toast.LENGTH_LONG).show();
+               progressAttendance.setVisibility(View.INVISIBLE);
+                linearLayout.setVisibility(View.VISIBLE);
+                 }
         });
        // finalattendance=v.findViewById(R.id.finalattendance);
 
@@ -198,18 +190,21 @@ mCV.addDecorator(new DayDecorator(v.getContext(),calendarDay));
 
             }
         });
-
+        progressAttendance.setVisibility(View.INVISIBLE);
+        linearLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
         progressAttendance.setVisibility(View.INVISIBLE);
         linearLayout.setVisibility(View.VISIBLE);
+        Toast.makeText(v.getContext(), "please connect to active network", Toast.LENGTH_LONG).show();
+
     }
 });
 
-        progressAttendance.setVisibility(View.INVISIBLE);
-        linearLayout.setVisibility(View.VISIBLE);
+        //progressAttendance.setVisibility(View.INVISIBLE);
+        //linearLayout.setVisibility(View.VISIBLE);
         return v;
     }
     public String getDate(String str){
@@ -254,11 +249,6 @@ mCV.addDecorator(new DayDecorator(v.getContext(),calendarDay));
                                 t.setBackgroundResource(R.drawable.table_custom_text_conclusion);
                                 t.setGravity(Gravity.CENTER);
                                 tableRow.addView(t);
-                               /* TextView textView=new TextView(v.getContext());
-                                textView.setText(key);
-                                textView.setTypeface(typeface);
-                                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-                                tableRow.addView(textView);*/
                                 TextView textView1=new TextView(v.getContext());
                                 textView1.setText(jsonObject1.get(key).toString());
                                 textView1.setTypeface(typeface);
@@ -270,23 +260,20 @@ mCV.addDecorator(new DayDecorator(v.getContext(),calendarDay));
                             }
 
                         } catch (JSONException e) {
+                            Toast.makeText(v.getContext(),"attendance data not found",Toast.LENGTH_SHORT).show();
+
                             e.printStackTrace();
                         }
 
-                        progressAttendance.setVisibility(View.INVISIBLE);
-                        linearLayout.setVisibility(View.VISIBLE);
                     }
                 }
-                else {
-                    progressAttendance.setVisibility(View.INVISIBLE);
-                    linearLayout.setVisibility(View.VISIBLE);
-                }
+
             }
 
             @Override
             public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
-                progressAttendance.setVisibility(View.INVISIBLE);
-                linearLayout.setVisibility(View.VISIBLE);
+
+                Toast.makeText(v.getContext(), "please connect to active network", Toast.LENGTH_LONG).show();
             }
         });
     }
