@@ -94,7 +94,7 @@
                 <TextView
                     android:id="@+id/excellent"
                     android:gravity="center"
-                    android:textColor="@color/excellent"
+                    android:textColor="#FFFFFF"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:textSize="30sp"/>
@@ -106,12 +106,13 @@
                     android:layout_height="wrap_content"
                     >
 
-                    <ImageView
-                        android:id="@+id/emojibad"
-                        android:layout_width="43dp"
-                        android:layout_height="43dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_crying" />
+
+                        <ImageView
+                            android:id="@+id/emojibad"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_crying" />
 
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
@@ -120,8 +121,8 @@
                     >
                     <ImageView
                         android:id="@+id/emojisatisfactory"
-                        android:layout_width="43dp"
-                        android:layout_height="43dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_sad" />
                 </android.support.v7.widget.CardView>
@@ -132,8 +133,8 @@
 
                     <ImageView
                         android:id="@+id/emojiexcellent"
-                        android:layout_width="43dp"
-                        android:layout_height="43dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_cool" />
                 </android.support.v7.widget.CardView>

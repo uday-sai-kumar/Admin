@@ -34,4 +34,5 @@
     <string name="loginn">Login</string>
     <string name="resent_otp">resent OTP</string>
     <string name="feedback">Feedback</string>
+    <string name="sorry">sorry, attendance data not found</string>
 </resources>

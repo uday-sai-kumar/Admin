@@ -1,18 +1,16 @@
 package com.example.udaysaikumar.clgattendance.Fragments;
 
 
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.widget.CardView;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -36,13 +34,12 @@ import com.example.udaysaikumar.clgattendance.R;
 import com.example.udaysaikumar.clgattendance.RetrofitPack.RetroGet;
 import com.example.udaysaikumar.clgattendance.RetrofitPack.RetrofitFirebase;
 import com.example.udaysaikumar.clgattendance.RetrofitPack.RetrofitMarksServer;
+import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Iterator;
 
 import retrofit2.Call;
@@ -65,6 +62,8 @@ TextView appusername,regno;
 RetroGet retroGet;
 TableLayout basic,btech;
 LinearLayout linearProgress;
+    private StorageReference mStorageRef;
+
     String API_KEY="AKPhEaFsE8c1f98hiX1VXa0dj5_7KFq0";
     String f;
     @Override
@@ -238,6 +237,27 @@ LinearLayout linearProgress;
 
            }
 
+        });
+        profile_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getFragmentManager();
+                try {
+                    FragmentTransaction fragmentTransaction = fragmentManager != null ? fragmentManager.beginTransaction() : null;
+                    PhotoFragment photoFragment = new PhotoFragment();
+                    if (fragmentTransaction != null) {
+                        fragmentTransaction.replace(R.id.frahome, photoFragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                    }
+                }
+                catch (Exception e){
+
+                }
+
+
+
+            }
         });
         return v;
     }

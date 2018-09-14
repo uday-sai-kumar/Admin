@@ -1,12 +1,16 @@
 package com.example.udaysaikumar.clgattendance.Fragments;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -15,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -32,10 +37,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -118,13 +127,16 @@ LinearLayout linearLayout;
                        // cd.showValue(f, 100, false);
                         if(f>=75){
                             excellent.setText(f.toString());
+                            excellent.setBackground(getResources().getDrawable(R.drawable.circle_aggregade_excellent));
 
                         }else if(f<75 && f>65){
                             satisfacotry.setText(f.toString());
+                            excellent.setBackground(getResources().getDrawable(R.drawable.circle_aggregade_satisfactory));
 
                         }
                         else {
                             bad.setText(f.toString());
+                            excellent.setBackground(getResources().getDrawable(R.drawable.circle_aggregade_bad));
 
                         }
 
@@ -222,48 +234,26 @@ mCV.addDecorator(new DayDecorator(v.getContext(),calendarDay));
         dataAttendance.enqueue(new Callback<String>() {
             @Override
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+
                 if(response.body()!=null)
                 {
                     if(!Objects.requireNonNull(response.body()).isEmpty())
                     {
                         String json=response.body();
                         System.out.println("hellojson"+json);
+                        FragmentManager manager=getFragmentManager();
                         try {
-                            tableAttendance.removeAllViews();
-                            System.out.println("hihihi143"+json);
-                            Typeface typeface = ResourcesCompat.getFont(v.getContext(), R.font.open_sans);
-                            JSONArray jsonArray=new JSONArray(json);
-                            JSONObject jsonObject=jsonArray.getJSONObject(0);
-                            JSONObject jsonObject1=jsonObject.getJSONObject("attend");
-                            System.out.println("hihihihi"+jsonObject1.toString());
-                            Iterator<String> iterator=jsonObject1.keys();
-                            while (iterator.hasNext()) {
-                                String key=iterator.next();
-                                //System.out.println(jsonObject1.get(key).toString());
-                                TableRow tableRow = new TableRow(v.getContext());
-                                tableRow.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                                TextView t = new TextView(v.getContext());
-                                t.setText(key);
-                                t.setTypeface(typeface);
-                                t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-                                t.setBackgroundResource(R.drawable.table_custom_text_conclusion);
-                                t.setGravity(Gravity.CENTER);
-                                tableRow.addView(t);
-                                TextView textView1=new TextView(v.getContext());
-                                textView1.setText(jsonObject1.get(key).toString());
-                                textView1.setTypeface(typeface);
-                                textView1.setGravity(Gravity.CENTER);
-                                textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 19);
-                                textView1.setBackgroundResource(R.drawable.table_custom_text_conclusion);
-                                tableRow.addView(textView1);
-                                tableAttendance.addView(tableRow,new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                            FragmentTransaction fr = null;
+                            if (manager != null) {
+                                fr = manager.beginTransaction();
+                                MyDialogFragment fragment = new MyDialogFragment();
+                                Bundle b = new Bundle();
+                                b.putString("dialog", json);
+                                fragment.setArguments(b);
+                                fragment.show(fr, "myfrag");
                             }
 
-                        } catch (JSONException e) {
-                            Toast.makeText(v.getContext(),"attendance data not found",Toast.LENGTH_SHORT).show();
-
-                            e.printStackTrace();
-                        }
+                        }catch (Exception e){}
 
                     }
                 }

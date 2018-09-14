@@ -3,7 +3,6 @@ package com.example.udaysaikumar.clgattendance.Fragments;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -22,7 +21,6 @@ import com.example.udaysaikumar.clgattendance.R;
 import com.example.udaysaikumar.clgattendance.RetrofitPack.RetroGet;
 import com.example.udaysaikumar.clgattendance.RetrofitPack.RetrofitMarksServer;
 import com.example.udaysaikumar.clgattendance.ViewPagerAdapter;
-import com.github.pavlospt.CircleView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -148,33 +146,33 @@ CircleDisplay cd;
                             // Float floatval=6.4f;
                             if(f>=7){
                                 excellent.setText(f.toString());
-                                excellent.setBackground(getResources().getDrawable(R.drawable.circle_aggregades));
+                                excellent.setBackground(getResources().getDrawable(R.drawable.circle_aggregade_excellent));
                                // excellent.setText(f.toString());
                                                          }
                                 else if(f<7 && f>6){
                                 satisfacotry.setText(f.toString());
-                                satisfacotry.setBackground(getResources().getDrawable(R.drawable.circle_aggregades));
+                                satisfacotry.setBackground(getResources().getDrawable(R.drawable.circle_aggregade_satisfactory));
                                 //satisfacotry.setText(f.toString());
                                                          }
                             else {
                                 bad.setText(f.toString());
-                                bad.setBackground(getResources().getDrawable(R.drawable.circle_aggregades));
+                                bad.setBackground(getResources().getDrawable(R.drawable.circle_aggregade_bad));
                                                          }
                         }
                         else{
                             Float f=Float.parseFloat(jj1.get("%f").toString());
                             if(f>=75){
                                 excellent.setText(f.toString());
-                                excellent.setBackground(getResources().getDrawable(R.drawable.circle_aggregades));
+                                excellent.setBackground(getResources().getDrawable(R.drawable.circle_aggregade_excellent));
                               //  excellent.setText(f.toString());
 
                             }else if(f<75 && f>65){
                                 satisfacotry.setText(f.toString());
-                                satisfacotry.setBackground(getResources().getDrawable(R.drawable.circle_aggregades));
+                                satisfacotry.setBackground(getResources().getDrawable(R.drawable.circle_aggregade_satisfactory));
                             }
                             else {
                                 bad.setText(f.toString());
-                                bad.setBackground(getResources().getDrawable(R.drawable.circle_aggregades));
+                                bad.setBackground(getResources().getDrawable(R.drawable.circle_aggregade_bad));
                             }
                         }
 

@@ -119,23 +119,23 @@ checkNet();
         ConnectivityManager connectivityManager= (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         assert connectivityManager != null;
         NetworkInfo networkInfo=connectivityManager.getActiveNetworkInfo();
-        assert networkInfo != null;
-        if(networkInfo.isConnected())
-        {
-            bottomNavigationView.setSelectedItemId(R.id.menu_home);
-            setUpPager(viewPager);
-        }
-        else{
-            Snackbar snackbar=Snackbar.make(relativeLayout,"No internt connection",Snackbar.LENGTH_INDEFINITE).setAction("retry", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    checkNet();
-                }
-            });
-            snackbar.show();
-            
 
-        }
+
+            if (networkInfo!=null && networkInfo.isConnected()) {
+                bottomNavigationView.setSelectedItemId(R.id.menu_home);
+                setUpPager(viewPager);
+            } else {
+                Snackbar snackbar = Snackbar.make(relativeLayout, "No internt connection", Snackbar.LENGTH_INDEFINITE).setAction("retry", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        checkNet();
+                    }
+                });
+                snackbar.show();
+
+
+            }
+        
     }
     private  void setUpPager(ViewPager pager){
 

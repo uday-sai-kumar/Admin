@@ -1,11 +1,15 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/frahome"
+    android:layout_height="match_parent">
+<ScrollView
+
     android:layout_height="match_parent"
     android:scrollbars="vertical"
     android:fitsSystemWindows="true"
     android:isScrollContainer="false"
-    android:id="@+id/frahome"
     android:background="#FFFFFF"
     android:layout_width="match_parent">
 
@@ -134,3 +138,4 @@
 
 </LinearLayout>
 </ScrollView>
+</RelativeLayout>
