@@ -1,12 +1,20 @@
 package com.example.udaysaikumar.clgattendance.Fragments;
 
 
+import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -16,6 +24,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -25,27 +35,45 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Registry;
+import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.module.AppGlideModule;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
+import com.bumptech.glide.signature.ObjectKey;
+import com.example.udaysaikumar.clgattendance.Login.LoginData;
 import com.example.udaysaikumar.clgattendance.R;
 import com.example.udaysaikumar.clgattendance.RetrofitPack.RetroGet;
 import com.example.udaysaikumar.clgattendance.RetrofitPack.RetrofitFirebase;
 import com.example.udaysaikumar.clgattendance.RetrofitPack.RetrofitMarksServer;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
@@ -62,7 +90,12 @@ TextView appusername,regno;
 RetroGet retroGet;
 TableLayout basic,btech;
 LinearLayout linearProgress;
-    private StorageReference mStorageRef;
+StorageReference mStorageRef,childRef,mStorage;
+ImageButton change_profile;
+Bitmap bitmap;
+    String UNAME;
+    public final int REQUEST_CODE = 2;
+    View v;
 
     String API_KEY="AKPhEaFsE8c1f98hiX1VXa0dj5_7KFq0";
     String f;
@@ -70,20 +103,49 @@ LinearLayout linearProgress;
     public View onCreateView(@NonNull final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View v=inflater.inflate(R.layout.fragment_fragment__home, container, false);
+         v=inflater.inflate(R.layout.fragment_fragment__home, container, false);
         profile_photo=v.findViewById(R.id.profile_photo);
         imageProgress=v.findViewById(R.id.imageProgress);
         homeProgress=v.findViewById(R.id.homeprogress);
         linearProgress=v.findViewById(R.id.linearprogress);
+       // change_profile=v.findViewById(R.id.change_profile);
         appusername=v.findViewById(R.id.appusername);
         regno=v.findViewById(R.id.appregno);
         basic=v.findViewById(R.id.basic);
         btech=v.findViewById(R.id.btech);
+
         RetroGet retroGet;
+        mStorageRef = FirebaseStorage.getInstance().getReference();
         SharedPreferences sharedPreferences=v.getContext().getSharedPreferences("MyLogin",MODE_PRIVATE);
-        final String UNAME=sharedPreferences.getString("username","");
+         UNAME=sharedPreferences.getString("username","");
         String PROFILE=sharedPreferences.getString("profile","");
-         retroGet= RetrofitFirebase.getRetrofits().create(RetroGet.class);
+        LoginData data=new LoginData();
+        profile();
+        profile_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mStorage = FirebaseStorage.getInstance().getReference();
+                //upload = v.findViewById(R.id.upload);
+
+                //checkpermission();
+                if (ActivityCompat.checkSelfPermission(v.getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(v.getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    // Permission is not granted
+                    requestPermissions( //Method of Fragment
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
+                            1);
+                } else {
+                            Intent i = new Intent(Intent.ACTION_PICK);
+                            i.setType("image/*");
+                            startActivityForResult(i, REQUEST_CODE);
+
+                        
+
+                }
+            }
+        });
+      /*   retroGet= RetrofitFirebase.getRetrofits().create(RetroGet.class);
        Call<String>retro= retroGet.getFireImage(UNAME+".JPG");
        retro.enqueue(new Callback<String>() {
            @Override
@@ -102,6 +164,7 @@ LinearLayout linearProgress;
                            System.out.println("123456response");
                            String url = "https://firebasestorage.googleapis.com/v0/b/site-74340.appspot.com/o/Photos%2F" + UNAME + ".JPG?" + "alt=media&token=" + f;
                            System.out.println("hello123" + url);
+
                            Glide.with(v.getContext()).load(url).apply(RequestOptions.circleCropTransform()).listener(new RequestListener<Drawable>() {
                                @Override
                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -134,7 +197,7 @@ LinearLayout linearProgress;
            }
        });
 
-
+*/
         String q="{\"regno\":{$eq:\""+UNAME+"\"}}";
         retroGet = RetrofitMarksServer.getSecRetrofit().create(RetroGet.class);
         Call<String> dataCall = retroGet.getProfile(PROFILE,API_KEY,q);
@@ -238,7 +301,8 @@ LinearLayout linearProgress;
            }
 
         });
-        profile_photo.setOnClickListener(new View.OnClickListener() {
+
+        /*profile_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentManager fragmentManager = getFragmentManager();
@@ -258,9 +322,71 @@ LinearLayout linearProgress;
 
 
             }
-        });
+        });*/
+
+        //System.out.println("wowbitmap1"+bitmap);
+
         return v;
     }
+    public void profile()
+    {
+        childRef=mStorageRef.child("Photos/"+UNAME+".JPG");
+        GlideApp.with(v.getContext()).asBitmap().load(childRef).apply(new RequestOptions().transform(new RoundedCorners(40))).signature(new ObjectKey(System.currentTimeMillis())).listener(new RequestListener<Bitmap>() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                imageProgress.setVisibility(View.INVISIBLE);
+                return false;
+            }
 
+            @Override
+            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                profile_photo.setImageBitmap(resource);
+                bitmap=resource;
+                System.out.println("wowbitmap"+bitmap.toString());
+                imageProgress.setVisibility(View.INVISIBLE);
+                return false;
+            }
+        }).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).submit();
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //super method removed
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_CODE) {
+                final Uri returnUri = data.getData();
+                System.out.println("moreuri"+returnUri);
+                try {
+                    final StorageReference storageReference=mStorage.child("Photos/"+UNAME+".JPG");
+                    storageReference.putFile(returnUri)
+                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    //GlideApp.with(v.getContext()).asBitmap().load(storageReference).apply(new RequestOptions().transform(new RoundedCorners(40))).into(profile_photo);
+                                    Toast.makeText(v.getContext(),"upload successful",Toast.LENGTH_SHORT).show();
+                                    final Bitmap bitmapImage;
+                                    try {
+                                        GlideApp.with(v.getContext()).load(returnUri).apply(new RequestOptions().transform(new RoundedCorners(40))).into(profile_photo);
+                                      //  bitmapImage = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), returnUri);
+                                        //profile_photo.setImageBitmap(bitmapImage);
+
+                                    }finally {
+
+                                    }
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(v.getContext(),"failed to upload",Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+              //  profile();
+                //.setImageBitmap(bitmapImage);
+            }
+        }
+    }
 
 }
